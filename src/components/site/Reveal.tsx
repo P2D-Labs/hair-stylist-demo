@@ -139,11 +139,11 @@ export function RevealText({
         <span key={i} className="inline-block overflow-hidden pb-[0.15em] align-bottom">
           <motion.span
             className="inline-block"
-            initial={{ y: reduceMotion ? 0 : "100%", opacity: reduceMotion ? 0 : 1 }}
+            initial={{ y: reduceMotion ? "0%" : "100%", opacity: reduceMotion ? 1 : 0 }}
             {...trigger}
             transition={{
-              duration: theme.motion.base,
-              delay: delay + i * stagger,
+              duration: reduceMotion ? 0 : theme.motion.base,
+              delay: reduceMotion ? 0 : delay + i * stagger,
               ease: theme.motion.ease,
             }}
           >

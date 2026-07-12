@@ -1,5 +1,6 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { Star } from "lucide-react";
 import { site } from "@/config/site";
 import { theme } from "@/config/theme";
 import { Reveal, RevealGroup, RevealText } from "@/components/site/Reveal";
@@ -7,7 +8,19 @@ import { ThreadLine, ChapterMark } from "@/components/site/ThreadLine";
 import { CtaLink } from "@/components/site/CtaLink";
 import { Image } from "@/components/site/Image";
 import { Section } from "@/components/site/Section";
+import { Counter } from "@/components/site/Counter";
+import { getWhatsAppHref } from "@/lib/whatsapp";
 import { Link } from "react-router-dom";
+
+function partnerInitials(name: string) {
+  return name
+    .split(" ")
+    .map((w) => w[0])
+    .filter((c) => /[A-Za-z]/.test(c))
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+}
 
 export default function Home() {
   const reduceMotion = useReducedMotion();
@@ -22,6 +35,14 @@ export default function Home() {
   const imageY = reduceMotion ? "0%" : imageYRaw;
   const contentY = reduceMotion ? "0%" : contentYRaw;
   const fade = reduceMotion ? 1 : fadeRaw;
+
+  const parallaxRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: parallaxProgress } = useScroll({
+    target: parallaxRef,
+    offset: ["start end", "end start"],
+  });
+  const parallaxYRaw = useTransform(parallaxProgress, [0, 1], ["-12%", "12%"]);
+  const parallaxY = reduceMotion ? "0%" : parallaxYRaw;
 
   return (
     <>
@@ -73,7 +94,7 @@ export default function Home() {
             transition={{ delay: 0.8, duration: 0.7, ease: theme.motion.ease }}
             className="mt-9 flex flex-wrap items-center gap-4"
           >
-            <CtaLink to={site.hero.ctaPrimary.path} variant="primary" className="!bg-white !text-brand-primary hover:!bg-brand-accent-light">
+            <CtaLink to={getWhatsAppHref()} external variant="primary" className="!bg-white !text-brand-primary hover:!bg-brand-accent-light">
               {site.hero.ctaPrimary.label}
             </CtaLink>
             <CtaLink to={site.hero.ctaSecondary.path} variant="ghost" className="!text-white">
@@ -103,7 +124,9 @@ export default function Home() {
           <RevealGroup className="grid grid-cols-2 divide-x divide-brand-line md:grid-cols-4">
             {site.stats.map((s) => (
               <Reveal key={s.label} className="px-4 py-10 text-center md:py-14">
-                <p className="font-display text-4xl text-brand-primary md:text-5xl">{s.value}</p>
+                <p className="font-display text-4xl text-brand-primary md:text-5xl">
+                  <Counter value={s.value} />
+                </p>
                 <p className="mt-2 font-label text-xs uppercase tracking-wide text-brand-ink-soft">
                   {s.label}
                 </p>
@@ -113,33 +136,77 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ---------- PHILOSOPHY ---------- */}
+      {/* ---------- SPECIALIST SPOTLIGHT ---------- */}
       <Section>
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-12">
-          <Reveal className="md:col-span-4">
-            <ChapterMark numeral="I" label={site.philosophy.eyebrow} />
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-12 md:items-center md:gap-10">
+          <Reveal className="relative md:col-span-5">
+            <div
+              className="absolute -bottom-5 -right-5 hidden h-full w-full border border-brand-accent md:block"
+              aria-hidden="true"
+            />
+            <div className="relative">
+              <Reveal variant="image">
+                <div className="aspect-[3/4] overflow-hidden">
+                  <Image
+                    src={site.specialistSpotlight.image}
+                    alt={site.specialistSpotlight.name}
+                    className="h-full w-full object-cover grayscale transition-all duration-700 ease-epoch hover:scale-105 hover:grayscale-0"
+                  />
+                </div>
+              </Reveal>
+              <span className="absolute -top-4 left-6 flex h-16 w-16 items-center justify-center bg-brand-primary font-display text-sm text-white md:left-8">
+                12 yrs
+              </span>
+            </div>
           </Reveal>
-          <div className="md:col-span-8">
-            <Reveal delay={0.05}>
-              <h2 className="font-display text-3xl leading-tight text-brand-primary md:text-5xl">
-                {site.philosophy.title}
-              </h2>
+
+          <div className="md:col-span-7">
+            <Reveal>
+              <ChapterMark numeral="I" label={site.specialistSpotlight.eyebrow} />
             </Reveal>
-            <Reveal delay={0.15}>
-              <p className="mt-6 max-w-xl text-base leading-relaxed text-brand-ink-soft">
-                {site.philosophy.body}
+            <RevealText
+              as="h2"
+              delay={0.08}
+              text={`“${site.specialistSpotlight.quote}”`}
+              className="mt-6 block font-display text-3xl italic leading-snug text-brand-primary md:text-4xl"
+            />
+            <Reveal delay={0.2} className="mt-6 flex items-center gap-4">
+              <span className="h-px w-10 bg-brand-accent" />
+              <div>
+                <p className="font-display text-lg text-brand-primary">
+                  {site.specialistSpotlight.name}
+                </p>
+                <p className="font-label text-xs uppercase tracking-wide text-brand-accent">
+                  {site.specialistSpotlight.role}
+                </p>
+              </div>
+            </Reveal>
+            <Reveal delay={0.28}>
+              <p className="mt-6 max-w-lg text-base leading-relaxed text-brand-ink-soft">
+                {site.specialistSpotlight.bio}
               </p>
             </Reveal>
-            <Reveal delay={0.25}>
-              <div className="mt-8">
-                <CtaLink to="/about" variant="ghost">
-                  Read our story
-                </CtaLink>
-              </div>
+            <div className="mt-8 divide-y divide-brand-line border-y border-brand-line">
+              {site.specialistSpotlight.specialties.map((s, i) => (
+                <Reveal
+                  key={s}
+                  delay={0.3 + i * 0.05}
+                  className="flex items-baseline gap-4 py-3"
+                >
+                  <span className="font-label text-xs text-brand-accent">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="font-display text-base text-brand-ink">{s}</span>
+                </Reveal>
+              ))}
+            </div>
+            <Reveal delay={0.5} className="mt-8">
+              <CtaLink to="/about" variant="ghost">
+                Meet the full team
+              </CtaLink>
             </Reveal>
           </div>
         </div>
-        <ThreadLine className="mt-20" />
       </Section>
 
       {/* ---------- FEATURED SERVICES ---------- */}
@@ -186,11 +253,65 @@ export default function Home() {
         </Reveal>
       </Section>
 
+      {/* ---------- PHILOSOPHY ---------- */}
+      <Section>
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-12">
+          <Reveal className="md:col-span-4">
+            <ChapterMark numeral="III" label={site.philosophy.eyebrow} />
+          </Reveal>
+          <div className="md:col-span-8">
+            <Reveal delay={0.05}>
+              <h2 className="font-display text-3xl leading-tight text-brand-primary md:text-5xl">
+                {site.philosophy.title}
+              </h2>
+            </Reveal>
+            <Reveal delay={0.15}>
+              <p className="mt-6 max-w-xl text-base leading-relaxed text-brand-ink-soft">
+                {site.philosophy.body}
+              </p>
+            </Reveal>
+            <Reveal delay={0.25}>
+              <div className="mt-8">
+                <CtaLink to="/about" variant="ghost">
+                  Read our story
+                </CtaLink>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+        <ThreadLine className="mt-20" />
+      </Section>
+
+      {/* ---------- PARALLAX SHOWCASE ---------- */}
+      <section ref={parallaxRef} className="relative h-[70svh] min-h-[440px] overflow-hidden">
+        <motion.div style={{ y: parallaxY }} className="absolute -inset-y-[15%] inset-x-0">
+          <Image
+            src={site.parallaxFeature.image}
+            alt=""
+            className="h-full w-full object-cover"
+          />
+        </motion.div>
+        <div className="absolute inset-0 bg-black/45" />
+        <div className="container-edit relative flex h-full flex-col items-center justify-center text-center text-white">
+          <Reveal>
+            <p className="font-label text-xs uppercase tracking-[0.3em] text-brand-accent-light">
+              {site.parallaxFeature.eyebrow}
+            </p>
+          </Reveal>
+          <RevealText
+            as="h2"
+            delay={0.08}
+            text={site.parallaxFeature.title}
+            className="mx-auto mt-5 block max-w-2xl font-display text-3xl leading-[1.2] md:text-5xl"
+          />
+        </div>
+      </section>
+
       {/* ---------- GALLERY TEASER ---------- */}
       <Section>
         <Reveal className="mb-12 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
           <div>
-            <ChapterMark numeral="III" label="Recent work" />
+            <ChapterMark numeral="IV" label="Recent work" />
             <h2 className="mt-4 max-w-lg font-display text-3xl text-brand-primary md:text-4xl">
               A few pages from the studio archive
             </h2>
@@ -215,20 +336,57 @@ export default function Home() {
         </RevealGroup>
       </Section>
 
+      {/* ---------- PARTNERS ---------- */}
+      <Section size="sm" border="top">
+        <Reveal className="mb-10 text-center">
+          <p className="font-label text-xs uppercase tracking-[0.25em] text-brand-ink-soft/70">
+            Trusted products &amp; partners
+          </p>
+        </Reveal>
+        <RevealGroup
+          stagger={0.05}
+          className="flex flex-wrap items-center justify-center gap-x-10 gap-y-8"
+        >
+          {site.partners.map((p) => (
+            <Reveal key={p} className="group flex flex-col items-center gap-2">
+              <span className="flex h-12 w-12 items-center justify-center rounded-full border border-brand-line font-display text-sm text-brand-ink-soft/50 transition-colors duration-300 group-hover:border-brand-accent group-hover:text-brand-primary">
+                {partnerInitials(p)}
+              </span>
+              <span className="font-display text-sm italic text-brand-ink-soft/45 transition-colors duration-300 group-hover:text-brand-primary">
+                {p}
+              </span>
+            </Reveal>
+          ))}
+        </RevealGroup>
+      </Section>
+
       {/* ---------- TESTIMONIALS ---------- */}
       <Section bg="primary">
         <Reveal className="mb-14">
-          <ChapterMark numeral="IV" label="In their words" />
+          <ChapterMark numeral="V" label="In their words" />
         </Reveal>
         <RevealGroup className="grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-8">
           {site.testimonials.map((t) => (
-            <Reveal key={t.name} className="border-t border-white/20 pt-6">
-              <p className="font-display text-xl leading-snug text-white/95">
+            <Reveal
+              key={t.name}
+              className="border-t border-white/20 pt-6 transition-transform duration-300 ease-epoch hover:-translate-y-1"
+            >
+              <div className="flex gap-0.5 text-brand-accent-light">
+                {Array.from({ length: t.rating }).map((_, i) => (
+                  <Star key={i} size={14} fill="currentColor" strokeWidth={0} />
+                ))}
+              </div>
+              <p className="mt-4 font-display text-xl leading-snug text-white/95">
                 &ldquo;{t.quote}&rdquo;
               </p>
-              <p className="mt-6 font-label text-xs uppercase tracking-wide text-brand-accent-light">
-                {t.name} — {t.role}
-              </p>
+              <div className="mt-6 flex items-center gap-3">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/30 font-label text-xs text-white/90">
+                  {t.name.charAt(0)}
+                </span>
+                <p className="font-label text-xs uppercase tracking-wide text-brand-accent-light">
+                  {t.name} — {t.role}
+                </p>
+              </div>
             </Reveal>
           ))}
         </RevealGroup>
@@ -244,7 +402,7 @@ export default function Home() {
             Your next chapter starts in the chair.
           </h2>
           <div className="mt-9 flex justify-center">
-            <CtaLink to="/contact" variant="primary">
+            <CtaLink to={getWhatsAppHref()} external variant="primary">
               Book your appointment
             </CtaLink>
           </div>

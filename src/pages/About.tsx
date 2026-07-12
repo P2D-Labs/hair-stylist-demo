@@ -4,6 +4,8 @@ import { ThreadLine, ChapterMark } from "@/components/site/ThreadLine";
 import { CtaLink } from "@/components/site/CtaLink";
 import { Image } from "@/components/site/Image";
 import { Section } from "@/components/site/Section";
+import { VideoSection } from "@/components/site/VideoSection";
+import { getWhatsAppHref } from "@/lib/whatsapp";
 
 export default function About() {
   return (
@@ -78,6 +80,13 @@ export default function About() {
         </div>
       </Section>
 
+      <VideoSection
+        video={site.aboutFeature.video}
+        poster={site.aboutFeature.poster}
+        eyebrow={site.aboutFeature.eyebrow}
+        title={site.aboutFeature.title}
+      />
+
       {/* ---------- TEAM ---------- */}
       <Section bg="paper-muted">
         <Reveal className="mb-14">
@@ -114,7 +123,7 @@ export default function About() {
             Come sit in the chair and tell us where you&rsquo;re headed.
           </h2>
           <div className="mt-9 flex justify-center">
-            <CtaLink to="/contact" variant="primary">
+            <CtaLink to={getWhatsAppHref()} external variant="primary">
               Book a consultation
             </CtaLink>
           </div>

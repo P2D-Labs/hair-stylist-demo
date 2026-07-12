@@ -39,6 +39,8 @@ export const site = {
       { label: "Facebook", href: "https://facebook.com" },
       { label: "TikTok", href: "https://tiktok.com" },
     ],
+    whatsappMessage:
+      "Hi Epoch! I'd like to book an appointment — could you help me find a time that works?",
   },
 
   hero: {
@@ -63,6 +65,24 @@ export const site = {
     title: "Hair is a timeline. We help you write the next line.",
     body: "We don't believe in trends for their own sake. Every consultation starts with a conversation about where you've been and where you're headed — then we cut, color, and style toward that person, not toward a photograph on a wall.",
   },
+
+  // Full-bleed parallax showcase on Home, between Featured Services and the gallery teaser
+  parallaxFeature: {
+    eyebrow: "The atelier",
+    title: "Where every appointment starts with a conversation, not a chair.",
+    image:
+      "https://images.unsplash.com/photo-1512690459411-b9245aed614b?q=80&w=1800&auto=format&fit=crop",
+  },
+
+  // Product/brand partners strip on Home — invented placeholder names, not real brands
+  partners: [
+    "Maison Névé",
+    "Verre & Co.",
+    "Nordlys Haircare",
+    "Atelier Lumen",
+    "Hearth & Comb",
+    "Silvertone Studio",
+  ],
 
   // Home page — a short curated preview; full list lives on /services
   featuredServices: [
@@ -94,6 +114,15 @@ export const site = {
         "https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?q=80&w=1200&auto=format&fit=crop",
     },
   ],
+
+  // Full-bleed video moment on /services, between the intro and the price list
+  servicesFeature: {
+    eyebrow: "Behind the chair",
+    title: "Every service starts with a conversation, then the work begins.",
+    video: "https://assets.mixkit.co/videos/33257/33257-720.mp4",
+    poster:
+      "https://images.unsplash.com/photo-1560869713-7d0a29430803?q=80&w=1800&auto=format&fit=crop",
+  },
 
   // Full services list — grouped for /services page
   serviceGroups: [
@@ -143,6 +172,27 @@ export const site = {
       ],
     },
   ],
+
+  // Specialist spotlight on Home — featuring the founder
+  specialistSpotlight: {
+    eyebrow: "Specialist spotlight",
+    quote: "I don't ask what you want cut off. I ask what you're trying to become.",
+    name: "Amara Wickramasinghe",
+    role: "Founder & Creative Director",
+    bio: "Amara trained in London and Colombo before opening Epoch's first single chair in 2013. Her specialty is reading a client's history — old photos, old cuts, old versions of themselves — and shaping what comes next from it.",
+    specialties: ["Consultation-led cuts", "Face-framing color", "Bridal & editorial styling"],
+    image:
+      "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1200&auto=format&fit=crop",
+  },
+
+  // Full-bleed video moment on /about, between the Timeline and Team sections
+  aboutFeature: {
+    eyebrow: "The craft",
+    title: "Fifteen minutes with a blow-dryer can change how you carry a whole day.",
+    video: "https://assets.mixkit.co/videos/45893/45893-720.mp4",
+    poster:
+      "https://images.unsplash.com/photo-1701977501667-20c0e38f5a9d?q=80&w=1800&auto=format&fit=crop",
+  },
 
   team: [
     {
@@ -204,18 +254,21 @@ export const site = {
         "I described a mood, not a haircut, and they built the whole thing around it. First salon that's ever listened that closely.",
       name: "Ishara J.",
       role: "Client since 2022",
+      rating: 5,
     },
     {
       quote:
         "The color consultation alone was worth the visit. No pressure, no upsell — just a plan that actually suited my hair.",
       name: "Tharindu M.",
       role: "Client since 2020",
+      rating: 5,
     },
     {
       quote:
         "Walked in after a bad box-dye job, walked out with hair I didn't know I could have. Booked my next three visits before I left.",
       name: "Naduni K.",
       role: "Client since 2024",
+      rating: 5,
     },
   ],
 

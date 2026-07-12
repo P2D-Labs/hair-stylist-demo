@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { site } from "@/config/site";
 import { theme } from "@/config/theme";
+import { getWhatsAppHref } from "@/lib/whatsapp";
 import { CtaLink } from "./CtaLink";
 
 export function Header() {
@@ -78,7 +79,7 @@ export function Header() {
         </nav>
 
         <div className="hidden md:block">
-          <CtaLink to="/contact" variant="primary" className="!py-2.5 !px-5 text-xs">
+          <CtaLink to={getWhatsAppHref()} external variant="primary" className="!py-2.5 !px-5 text-xs">
             Book now
           </CtaLink>
         </div>
@@ -120,7 +121,7 @@ export function Header() {
                 </motion.div>
               ))}
               <div className="mt-4">
-                <CtaLink to="/contact" variant="primary">
+                <CtaLink to={getWhatsAppHref()} external variant="primary">
                   Book now
                 </CtaLink>
               </div>

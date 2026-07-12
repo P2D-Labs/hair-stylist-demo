@@ -5,10 +5,13 @@ import { site } from "@/config/site";
 import { Reveal, RevealText } from "@/components/site/Reveal";
 import { ThreadLine, ChapterMark } from "@/components/site/ThreadLine";
 import { Section } from "@/components/site/Section";
-import { socialIcons } from "@/components/site/SocialIcons";
+import { socialIcons, WhatsAppIcon } from "@/components/site/SocialIcons";
+import { CtaLink } from "@/components/site/CtaLink";
+import { getWhatsAppHref } from "@/lib/whatsapp";
 
 export default function Contact() {
   const [submitting, setSubmitting] = useState(false);
+  const whatsappHref = getWhatsAppHref();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -146,6 +149,18 @@ export default function Contact() {
                   {submitting ? "Sending…" : "Request appointment"}
                 </button>
               </form>
+
+              <div className="mt-8 flex flex-col gap-3 border-t border-brand-line pt-6 sm:flex-row sm:items-center sm:justify-between">
+                <p className="text-sm text-brand-ink-soft">
+                  Prefer a faster reply? Message us directly.
+                </p>
+                <CtaLink to={whatsappHref} variant="secondary" external className="!py-3">
+                  <span className="flex items-center gap-2">
+                    <WhatsAppIcon size={16} />
+                    Book via WhatsApp
+                  </span>
+                </CtaLink>
+              </div>
             </div>
           </Reveal>
         </div>

@@ -3,6 +3,8 @@ import { Reveal, RevealGroup, RevealText } from "@/components/site/Reveal";
 import { ThreadLine, ChapterMark } from "@/components/site/ThreadLine";
 import { CtaLink } from "@/components/site/CtaLink";
 import { Section } from "@/components/site/Section";
+import { VideoSection } from "@/components/site/VideoSection";
+import { getWhatsAppHref } from "@/lib/whatsapp";
 
 export default function Services() {
   return (
@@ -24,6 +26,14 @@ export default function Services() {
           </p>
         </Reveal>
       </Section>
+
+      <VideoSection
+        video={site.servicesFeature.video}
+        poster={site.servicesFeature.poster}
+        eyebrow={site.servicesFeature.eyebrow}
+        title={site.servicesFeature.title}
+        heightClassName="h-[65svh] min-h-[420px]"
+      />
 
       {site.serviceGroups.map((group, gi) => (
         <Section key={group.id} size="sm" border={gi !== 0 ? "top" : "none"}>
@@ -59,7 +69,7 @@ export default function Services() {
             Not sure where to start? Book a free consultation.
           </h2>
           <div className="mt-9 flex justify-center">
-            <CtaLink to="/contact" variant="primary">
+            <CtaLink to={getWhatsAppHref()} external variant="primary">
               Book a consultation
             </CtaLink>
           </div>
