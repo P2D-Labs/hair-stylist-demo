@@ -3,6 +3,7 @@ import { useRef } from "react";
 import { Star } from "lucide-react";
 import { site } from "@/config/site";
 import { theme } from "@/config/theme";
+import { useGalleryData } from "@/hooks/useGalleryData";
 import { Reveal, RevealGroup, RevealText } from "@/components/site/Reveal";
 import { ThreadLine, ChapterMark } from "@/components/site/ThreadLine";
 import { CtaLink } from "@/components/site/CtaLink";
@@ -23,6 +24,8 @@ function partnerInitials(name: string) {
 }
 
 export default function Home() {
+  const galleryState = useGalleryData();
+  const galleryPreview = galleryState.status === "ready" ? galleryState.data.items.slice(0, 4) : [];
   const reduceMotion = useReducedMotion();
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -322,11 +325,12 @@ export default function Home() {
         </Reveal>
 
         <RevealGroup className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
-          {site.gallery.items.slice(0, 4).map((g) => (
+          {galleryPreview.map((g) => (
             <Reveal key={g.id} variant="image" className="group overflow-hidden">
               <div className="aspect-[3/4] overflow-hidden bg-brand-paper-muted">
                 <Image
-                  src={g.image}
+                  src={g.thumbnail}
+                  fallbackSrc={g.image}
                   alt={g.caption}
                   className="h-full w-full object-cover transition-transform duration-700 ease-epoch group-hover:scale-110"
                 />

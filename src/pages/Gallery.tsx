@@ -1,26 +1,30 @@
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { X, ChevronLeft, ChevronRight } from "lucide-react";
-import { site } from "@/config/site";
+import { X, ChevronLeft, ChevronRight, LoaderCircle, AlertTriangle } from "lucide-react";
 import { theme } from "@/config/theme";
+import { useGalleryData } from "@/hooks/useGalleryData";
 import { Reveal, RevealText } from "@/components/site/Reveal";
 import { ChapterMark } from "@/components/site/ThreadLine";
 import { Image } from "@/components/site/Image";
 import { Section } from "@/components/site/Section";
 
 export default function Gallery() {
+  const galleryState = useGalleryData();
   const [filter, setFilter] = useState<string>("All");
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-  const items = useMemo(
-    () =>
-      filter === "All"
-        ? site.gallery.items
-        : site.gallery.items.filter((i) => i.category === filter),
-    [filter]
+  const allItems = galleryState.status === "ready" ? galleryState.data.items : [];
+  const filters = useMemo(
+    () => ["All", ...(galleryState.status === "ready" ? galleryState.data.categories : [])],
+    [galleryState]
   );
 
-  const openAt = (id: number) => {
+  const items = useMemo(
+    () => (filter === "All" ? allItems : allItems.filter((i) => i.category === filter)),
+    [allItems, filter]
+  );
+
+  const openAt = (id: string) => {
     const idx = items.findIndex((i) => i.id === id);
     setActiveIndex(idx);
   };
@@ -46,7 +50,7 @@ export default function Gallery() {
 
       <section className="sticky top-20 z-30 border-y border-brand-line bg-brand-paper py-4 shadow-[0_1px_0_0_var(--color-line)]">
         <div className="container-edit flex flex-wrap gap-2">
-          {site.gallery.filters.map((f) => (
+          {filters.map((f) => (
             <button
               key={f}
               onClick={() => setFilter(f)}
@@ -63,35 +67,61 @@ export default function Gallery() {
       </section>
 
       <section className="container-edit py-10 md:py-14">
-        <motion.div layout className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4">
-          <AnimatePresence>
-            {items.map((item) => (
-              <motion.button
-                layout
-                key={item.id}
-                initial={{ opacity: 0, scale: 0.96 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.96 }}
-                transition={{ duration: 0.4, ease: theme.motion.ease }}
-                onClick={() => openAt(item.id)}
-                className={`group relative overflow-hidden bg-brand-paper-muted text-left ${
-                  item.id % 5 === 0 ? "col-span-2 aspect-[16/10] md:col-span-1 md:aspect-[3/4]" : "aspect-[3/4]"
-                }`}
-              >
-                <Image
-                  src={item.image}
-                  alt={item.caption}
-                  className="h-full w-full object-cover transition-transform duration-700 ease-epoch group-hover:scale-110"
-                />
-                <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/85 via-black/25 via-40% to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <p className="p-4 font-label text-xs uppercase tracking-wide text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
-                    {item.caption}
-                  </p>
-                </div>
-              </motion.button>
-            ))}
-          </AnimatePresence>
-        </motion.div>
+        {galleryState.status === "loading" && (
+          <div className="flex flex-col items-center justify-center gap-3 py-24 text-brand-ink-soft">
+            <LoaderCircle size={28} className="animate-spin" />
+            <p className="font-label text-xs uppercase tracking-wide">Loading gallery…</p>
+          </div>
+        )}
+
+        {galleryState.status === "error" && (
+          <div className="flex flex-col items-center justify-center gap-3 py-24 text-center text-brand-ink-soft">
+            <AlertTriangle size={28} />
+            <p className="font-label text-xs uppercase tracking-wide">Couldn't load the gallery</p>
+            <p className="max-w-md text-sm text-brand-ink-soft/80">{galleryState.error}</p>
+          </div>
+        )}
+
+        {galleryState.status === "ready" && items.length === 0 && (
+          <div className="flex items-center justify-center py-24 text-brand-ink-soft">
+            <p className="font-label text-xs uppercase tracking-wide">No images in this category yet.</p>
+          </div>
+        )}
+
+        {galleryState.status === "ready" && items.length > 0 && (
+          <motion.div layout className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4">
+            <AnimatePresence>
+              {items.map((item, index) => (
+                <motion.button
+                  layout
+                  key={item.id}
+                  initial={{ opacity: 0, scale: 0.96 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.96 }}
+                  transition={{ duration: 0.4, ease: theme.motion.ease }}
+                  onClick={() => openAt(item.id)}
+                  className={`group relative overflow-hidden bg-brand-paper-muted text-left ${
+                    (index + 1) % 5 === 0
+                      ? "col-span-2 aspect-[16/10] md:col-span-1 md:aspect-[3/4]"
+                      : "aspect-[3/4]"
+                  }`}
+                >
+                  <Image
+                    src={item.thumbnail}
+                    fallbackSrc={item.image}
+                    alt={item.caption}
+                    className="h-full w-full object-cover transition-transform duration-700 ease-epoch group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/85 via-black/25 via-40% to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    <p className="p-4 font-label text-xs uppercase tracking-wide text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
+                      {item.caption}
+                    </p>
+                  </div>
+                </motion.button>
+              ))}
+            </AnimatePresence>
+          </motion.div>
+        )}
       </section>
 
       <AnimatePresence>
@@ -142,6 +172,7 @@ export default function Gallery() {
             >
               <Image
                 src={items[activeIndex]?.image ?? ""}
+                fallbackSrc={items[activeIndex]?.thumbnail}
                 alt={items[activeIndex]?.caption ?? ""}
                 eager
                 className="max-h-[75vh] w-auto object-contain"

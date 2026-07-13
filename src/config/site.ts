@@ -271,21 +271,6 @@ export const site = {
       rating: 5,
     },
   ],
-
-  gallery: {
-    filters: ["All", "Cut", "Color", "Bridal", "Editorial"],
-    items: [
-      { id: 1, category: "Cut", image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=1000&auto=format&fit=crop", caption: "Precision bob, textured finish" },
-      { id: 2, category: "Color", image: "https://images.unsplash.com/photo-1605497788044-5a32c7078486?q=80&w=1000&auto=format&fit=crop", caption: "Sunlit balayage" },
-      { id: 3, category: "Editorial", image: "https://images.unsplash.com/photo-1519699047748-de8e457a634e?q=80&w=1000&auto=format&fit=crop", caption: "Editorial waves" },
-      { id: 4, category: "Bridal", image: "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1000&auto=format&fit=crop", caption: "Bridal updo, fresh florals" },
-      { id: 5, category: "Cut", image: "https://images.unsplash.com/photo-1562322140-8baeececf3df?q=80&w=1000&auto=format&fit=crop", caption: "Sharp lob, deep side part" },
-      { id: 6, category: "Color", image: "https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6?q=80&w=1000&auto=format&fit=crop", caption: "Copper root melt" },
-      { id: 7, category: "Editorial", image: "https://images.unsplash.com/photo-1517832606299-7ae9b720a186?q=80&w=1000&auto=format&fit=crop", caption: "Studio session, vol. IV" },
-      { id: 8, category: "Color", image: "https://images.unsplash.com/photo-1554519515-242161756769?q=80&w=1000&auto=format&fit=crop", caption: "Rainbow melt, textured waves" },
-      { id: 9, category: "Bridal", image: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=1000&auto=format&fit=crop", caption: "Half-up bridal trial" },
-    ],
-  },
 } as const;
 
 export type Site = typeof site;
