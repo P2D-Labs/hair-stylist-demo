@@ -50,8 +50,10 @@ export const site = {
     ctaPrimary: { label: "Book an appointment", path: "/contact" },
     ctaSecondary: { label: "View our work", path: "/gallery" },
     image:
-      "https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=1400&auto=format&fit=crop",
-  },
+    "https://images.unsplash.com/photo-1629397685944-7073f5589754?fm=jpg&q=80&w=1920&auto=format&fit=crop"
+// "https://images.unsplash.com/photo-1626379501846-0df4067b8bb9?fm=jpg&q=80&w=1920&auto=format&fit=crop"  
+// "/images/interior-3d-design-concepts-house-min.jpg"
+ },
 
   stats: [
     { value: "12", label: "Years shaping Colombo's hair" },
@@ -119,7 +121,8 @@ export const site = {
   servicesFeature: {
     eyebrow: "Behind the chair",
     title: "Every service starts with a conversation, then the work begins.",
-    video: "https://assets.mixkit.co/videos/33257/33257-720.mp4",
+    // video: "https://assets.mixkit.co/videos/33257/33257-720.mp4",
+    video: "/images/AQMdPPNN_TjC9IkFFz2A6UBe1l6gMIWIdWGypSNmbVvx1ouGxXPVFmX0hYdsiPv3vRuQErf-pCS6iWyU-jaKs8AY_vWnueo264Xi3pE.mp4",
     poster:
       "https://images.unsplash.com/photo-1560869713-7d0a29430803?q=80&w=1800&auto=format&fit=crop",
   },
@@ -177,12 +180,13 @@ export const site = {
   specialistSpotlight: {
     eyebrow: "Specialist spotlight",
     quote: "I don't ask what you want cut off. I ask what you're trying to become.",
-    name: "Amara Wickramasinghe",
+    name: "Aravinda",
     role: "Founder & Creative Director",
     bio: "Amara trained in London and Colombo before opening Epoch's first single chair in 2013. Her specialty is reading a client's history — old photos, old cuts, old versions of themselves — and shaping what comes next from it.",
     specialties: ["Consultation-led cuts", "Face-framing color", "Bridal & editorial styling"],
     image:
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1200&auto=format&fit=crop",
+      "/images/452227078_17961131102789161_7448938294489291823_n.jpg"
+      // "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1200&auto=format&fit=crop",
   },
 
   // Full-bleed video moment on /about, between the Timeline and Team sections
@@ -196,7 +200,7 @@ export const site = {
 
   team: [
     {
-      name: "Amara Wickramasinghe",
+      name: "Aravinda",
       role: "Founder & Creative Director",
       image:
         "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=800&auto=format&fit=crop",
@@ -271,21 +275,33 @@ export const site = {
       rating: 5,
     },
   ],
-
   gallery: {
     filters: ["All", "Cut", "Color", "Bridal", "Editorial"],
     items: [
-      { id: 1, category: "Cut", image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=1000&auto=format&fit=crop", caption: "Precision bob, textured finish" },
-      { id: 2, category: "Color", image: "https://images.unsplash.com/photo-1605497788044-5a32c7078486?q=80&w=1000&auto=format&fit=crop", caption: "Sunlit balayage" },
-      { id: 3, category: "Editorial", image: "https://images.unsplash.com/photo-1519699047748-de8e457a634e?q=80&w=1000&auto=format&fit=crop", caption: "Editorial waves" },
-      { id: 4, category: "Bridal", image: "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1000&auto=format&fit=crop", caption: "Bridal updo, fresh florals" },
-      { id: 5, category: "Cut", image: "https://images.unsplash.com/photo-1562322140-8baeececf3df?q=80&w=1000&auto=format&fit=crop", caption: "Sharp lob, deep side part" },
-      { id: 6, category: "Color", image: "https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6?q=80&w=1000&auto=format&fit=crop", caption: "Copper root melt" },
+      { id: 1, category: "Cut", image: "/images/1 (1).jpg", caption: "Precision bob, textured finish" },
+      { id: 2, category: "Color", image: "/images/1 (2).jpg", caption: "Sunlit balayage" },
+      { id: 3, category: "Editorial", image: "/images/1 (3).jpg", caption: "Editorial waves" },
+      { id: 4, category: "Bridal", image: "/images/1 (4).jpg", caption: "Bridal updo, fresh florals" },
+      { id: 5, category: "Cut", image: "/images/1 (5).jpg", caption: "Sharp lob, deep side part" },
       { id: 7, category: "Editorial", image: "https://images.unsplash.com/photo-1517832606299-7ae9b720a186?q=80&w=1000&auto=format&fit=crop", caption: "Studio session, vol. IV" },
       { id: 8, category: "Color", image: "https://images.unsplash.com/photo-1554519515-242161756769?q=80&w=1000&auto=format&fit=crop", caption: "Rainbow melt, textured waves" },
       { id: 9, category: "Bridal", image: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=1000&auto=format&fit=crop", caption: "Half-up bridal trial" },
     ],
   },
+  // gallery: {
+  //   filters: ["All", "Cut", "Color", "Bridal", "Editorial"],
+  //   items: [
+  //     { id: 1, category: "Cut", image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=1000&auto=format&fit=crop", caption: "Precision bob, textured finish" },
+  //     { id: 2, category: "Color", image: "https://images.unsplash.com/photo-1605497788044-5a32c7078486?q=80&w=1000&auto=format&fit=crop", caption: "Sunlit balayage" },
+  //     { id: 3, category: "Editorial", image: "https://images.unsplash.com/photo-1519699047748-de8e457a634e?q=80&w=1000&auto=format&fit=crop", caption: "Editorial waves" },
+  //     { id: 4, category: "Bridal", image: "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1000&auto=format&fit=crop", caption: "Bridal updo, fresh florals" },
+  //     { id: 5, category: "Cut", image: "https://images.unsplash.com/photo-1562322140-8baeececf3df?q=80&w=1000&auto=format&fit=crop", caption: "Sharp lob, deep side part" },
+  //     { id: 6, category: "Color", image: "https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6?q=80&w=1000&auto=format&fit=crop", caption: "Copper root melt" },
+  //     { id: 7, category: "Editorial", image: "https://images.unsplash.com/photo-1517832606299-7ae9b720a186?q=80&w=1000&auto=format&fit=crop", caption: "Studio session, vol. IV" },
+  //     { id: 8, category: "Color", image: "https://images.unsplash.com/photo-1554519515-242161756769?q=80&w=1000&auto=format&fit=crop", caption: "Rainbow melt, textured waves" },
+  //     { id: 9, category: "Bridal", image: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=1000&auto=format&fit=crop", caption: "Half-up bridal trial" },
+  //   ],
+  // },
 } as const;
 
 export type Site = typeof site;

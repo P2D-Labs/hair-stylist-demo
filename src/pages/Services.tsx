@@ -32,7 +32,7 @@ export default function Services() {
         poster={site.servicesFeature.poster}
         eyebrow={site.servicesFeature.eyebrow}
         title={site.servicesFeature.title}
-        heightClassName="h-[65svh] min-h-[420px]"
+        heightClassName="h-[80svh] min-h-[420px]"
       />
 
       {site.serviceGroups.map((group, gi) => (

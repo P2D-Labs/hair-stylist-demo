@@ -1,129 +1,598 @@
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap");
+
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+
+
+/* ============================================================================
+   GLOBAL DESIGN TOKENS
+   Luxury Salon Light + Dark Theme
+============================================================================ */
+
+
 @layer base {
+
   :root {
-    --color-primary: #3a1440;
-    --color-primary-dark: #26092c;
-    --color-primary-light: #5c2568;
-    --color-secondary: #9c7bae;
-    --color-secondary-light: #e7dcec;
-    --color-secondary-dark: #6e4e7f;
-    --color-accent: #4c7a5b;
-    --color-accent-light: #8fae93;
-    --color-accent-dark: #2f5b3d;
-    --color-ink: #1b1120;
-    --color-ink-soft: #4a3a50;
-    --color-paper: #fbf8f6;
-    --color-paper-muted: #f2ebee;
-    --color-line: #e4d9e2;
-    --color-white: #ffffff;
-    --color-primary-rgb: 58 20 64;
-    --color-primary-dark-rgb: 38 9 44;
-    --color-primary-light-rgb: 92 37 104;
-    --color-secondary-rgb: 156 123 174;
-    --color-secondary-light-rgb: 231 220 236;
-    --color-secondary-dark-rgb: 110 78 127;
-    --color-accent-rgb: 76 122 91;
-    --color-accent-light-rgb: 143 174 147;
-    --color-accent-dark-rgb: 47 91 61;
-    --color-ink-rgb: 27 17 32;
-    --color-ink-soft-rgb: 74 58 80;
-    --color-paper-rgb: 251 248 246;
-    --color-paper-muted-rgb: 242 235 238;
-    --color-line-rgb: 228 217 226;
-    --color-white-rgb: 255 255 255;
-    --font-display: "Fraunces", serif;
-    --font-body: "Manrope", sans-serif;
-    --font-label: "Manrope", sans-serif;
-    --radius-sm: 2px;
-    --radius-md: 4px;
-    --radius-lg: 0px;
-    --radius-pill: 999px;
 
-    --background: 0 0% 100%;
-    --foreground: 290 34% 9%;
-    --card: 0 0% 100%;
-    --card-foreground: 290 34% 9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 290 34% 9%;
-    --primary: 291 51% 16%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 288 21% 65%;
-    --secondary-foreground: 291 51% 12%;
-    --muted: 300 12% 94%;
-    --muted-foreground: 291 15% 35%;
-    --accent: 138 25% 39%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 72% 45%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 300 15% 87%;
-    --input: 300 15% 87%;
-    --ring: 291 51% 16%;
-    --radius: 0.125rem;
+    /* Brand Colors */
+    --color-primary: #7B047B;
+    --color-primary-dark: #5A015A;
+    --color-primary-light: #A32BA3;
+
+
+    --color-secondary: #AB09D3;
+    --color-secondary-light: #E07CF5;
+    --color-secondary-dark: #8507A5;
+
+
+    --color-accent: #A71669;
+    --color-accent-light: #D64C97;
+    --color-accent-dark: #7A104D;
+
+
+    --color-success: #1C4839;
+
+
+    /* Text */
+    --color-ink: #231525;
+    --color-ink-soft: #6A556B;
+
+
+    /* Background */
+    --color-paper: #FCFAFD;
+    --color-paper-muted: #F7F2F9;
+
+
+    /* Border */
+    --color-line: #E9DCEC;
+
+
+    --color-white:#FFFFFF;
+    --color-black:#000000;
+
+
+
+    /* RGB values */
+
+    --color-primary-rgb:
+    123 4 123;
+
+    --color-primary-dark-rgb:
+    90 1 90;
+
+    --color-primary-light-rgb:
+    163 43 163;
+
+
+    --color-secondary-rgb:
+    171 9 211;
+
+    --color-secondary-light-rgb:
+    224 124 245;
+
+    --color-secondary-dark-rgb:
+    133 7 165;
+
+
+    --color-accent-rgb:
+    167 22 105;
+
+    --color-accent-light-rgb:
+    214 76 151;
+
+    --color-accent-dark-rgb:
+    122 16 77;
+
+
+    --color-success-rgb:
+    28 72 57;
+
+
+    --color-ink-rgb:
+    35 21 37;
+
+    --color-ink-soft-rgb:
+    106 85 107;
+
+
+    --color-paper-rgb:
+    252 250 253;
+
+    --color-paper-muted-rgb:
+    247 242 249;
+
+
+    --color-line-rgb:
+    233 220 236;
+
+
+    --color-white-rgb:
+    255 255 255;
+
+
+
+    /* Fonts */
+
+    --font-display:
+    "Cormorant Garamond", serif;
+
+
+    --font-body:
+    "Manrope", sans-serif;
+
+
+    --font-label:
+    "Manrope", sans-serif;
+
+
+
+    /* Radius */
+
+    --radius-sm:4px;
+    --radius-md:8px;
+    --radius-lg:18px;
+    --radius-pill:999px;
+
+
+
+    /* Tailwind/Shadcn compatibility */
+
+    --background:
+    280 25% 99%;
+
+    --foreground:
+    285 28% 12%;
+
+
+    --card:
+    0 0% 100%;
+
+    --card-foreground:
+    285 28% 12%;
+
+
+    --popover:
+    0 0% 100%;
+
+    --popover-foreground:
+    285 28% 12%;
+
+
+    --primary:
+    300 94% 25%;
+
+    --primary-foreground:
+    0 0% 100%;
+
+
+    --secondary:
+    291 92% 43%;
+
+    --secondary-foreground:
+    0 0% 100%;
+
+
+    --muted:
+    280 25% 95%;
+
+    --muted-foreground:
+    285 15% 40%;
+
+
+    --accent:
+    330 77% 37%;
+
+    --accent-foreground:
+    0 0% 100%;
+
+
+    --border:
+    280 30% 90%;
+
+
+    --input:
+    280 30% 90%;
+
+
+    --ring:
+    300 94% 25%;
+
+
+    --radius:
+    18px;
   }
+
+
+
+
+/* ============================================================================
+   DARK MODE
+============================================================================ */
+
+
+.dark {
+
+
+    --color-primary:
+    #C73BDE;
+
+
+    --color-primary-dark:
+    #AB09D3;
+
+
+    --color-primary-light:
+    #E07CF5;
+
+
+
+    --color-secondary:
+    #AB09D3;
+
+
+    --color-secondary-light:
+    #E07CF5;
+
+
+    --color-secondary-dark:
+    #7B047B;
+
+
+
+    --color-accent:
+    #FF4FA5;
+
+
+    --color-accent-light:
+    #FF82C1;
+
+
+    --color-accent-dark:
+    #C21874;
+
+
+
+    --color-success:
+    #57B894;
+
+
+
+    --color-ink:
+    #FAF3FC;
+
+
+    --color-ink-soft:
+    #D5C5DA;
+
+
+
+    --color-paper:
+    #120813;
+
+
+    --color-paper-muted:
+    #1A0F1D;
+
+
+
+    --color-line:
+    #3C2140;
+
+
+
+    --background:
+    285 40% 6%;
+
+
+    --foreground:
+    280 30% 96%;
+
+
+    --card:
+    285 30% 10%;
+
+
+    --card-foreground:
+    280 30% 96%;
+
+
+    --border:
+    285 25% 20%;
+
+
+    --input:
+    285 25% 20%;
+
+
+    --ring:
+    300 80% 60%;
+
 }
 
-@layer base {
-  * {
+
+
+
+
+/* ============================================================================
+   GLOBAL RESET
+============================================================================ */
+
+
+* {
+
     @apply border-border;
-  }
 
-  html {
-    scroll-behavior: smooth;
-  }
-
-  body {
-    background-color: var(--color-paper);
-    color: var(--color-ink);
-    font-family: var(--font-body);
-    -webkit-font-smoothing: antialiased;
-  }
-
-  h1, h2, h3, h4, .font-display {
-    font-family: var(--font-display);
-  }
-
-  ::selection {
-    background-color: var(--color-accent);
-    color: var(--color-white);
-  }
-
-  ::-webkit-scrollbar {
-    width: 10px;
-  }
-  ::-webkit-scrollbar-track {
-    background: var(--color-paper);
-  }
-  ::-webkit-scrollbar-thumb {
-    background: var(--color-secondary);
-    border: 2px solid var(--color-paper);
-    border-radius: var(--radius-pill);
-  }
-
-  :focus-visible {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 3px;
-  }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+
+
+html {
+
+    scroll-behavior:smooth;
+
 }
+
+
+
+body {
+
+
+    background-color:
+    var(--color-paper);
+
+
+    color:
+    var(--color-ink);
+
+
+    font-family:
+    var(--font-body);
+
+
+    -webkit-font-smoothing:
+    antialiased;
+
+
+    transition:
+    background-color .3s ease,
+    color .3s ease;
+
+}
+
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-display {
+
+
+    font-family:
+    var(--font-display);
+
+
+    letter-spacing:
+    -0.02em;
+
+}
+
+
+
+
+::selection {
+
+
+    background:
+    var(--color-accent);
+
+
+    color:
+    white;
+
+}
+
+
+
+
+/* ============================================================================
+   SCROLLBAR
+============================================================================ */
+
+
+::-webkit-scrollbar {
+
+    width:10px;
+
+}
+
+
+
+::-webkit-scrollbar-track {
+
+
+    background:
+    var(--color-paper);
+
+}
+
+
+
+::-webkit-scrollbar-thumb {
+
+
+    background:
+    linear-gradient(
+        180deg,
+        var(--color-primary),
+        var(--color-secondary)
+    );
+
+
+    border:
+    2px solid var(--color-paper);
+
+
+    border-radius:
+    var(--radius-pill);
+
+}
+
+
+
+
+/* ============================================================================
+   FOCUS
+============================================================================ */
+
+
+:focus-visible {
+
+
+    outline:
+    2px solid var(--color-accent);
+
+
+    outline-offset:
+    4px;
+
+}
+
+
+
+
+}
+
+
+
+
+/* ============================================================================
+   REDUCED MOTION
+============================================================================ */
+
+
+@media(prefers-reduced-motion:reduce){
+
+
+html{
+
+    scroll-behavior:auto;
+
+}
+
+
+*,
+*::before,
+*::after{
+
+
+    animation-duration:
+    0.01ms!important;
+
+
+    transition-duration:
+    0.01ms!important;
+
+}
+
+
+}
+
+
+
+
+
+/* ============================================================================
+   CUSTOM UTILITIES
+============================================================================ */
+
 
 @layer utilities {
-  .container-edit {
+
+
+.container-edit {
+
+
     @apply mx-auto w-full max-w-[1400px] px-6 md:px-10 lg:px-16;
-  }
+
+
+}
+
+
+
+/* Luxury gradient */
+
+.brand-gradient {
+
+
+    background:
+    linear-gradient(
+        135deg,
+        #7B047B 0%,
+        #AB09D3 55%,
+        #A71669 100%
+    );
+
+}
+
+
+
+
+.glass {
+
+
+    background:
+    rgba(255,255,255,.75);
+
+
+    backdrop-filter:
+    blur(18px);
+
+
+    border:
+    1px solid rgba(123,4,123,.12);
+
+}
+
+
+
+
+.dark .glass {
+
+
+    background:
+    rgba(20,10,20,.65);
+
+
+    border:
+    1px solid rgba(255,255,255,.08);
+
+}
+
+
+
+.luxury-shadow {
+
+
+    box-shadow:
+    0 15px 45px rgba(123,4,123,.12);
+
+}
+
+
+
+.luxury-shadow-hover:hover {
+
+
+    box-shadow:
+    0 25px 60px rgba(123,4,123,.22);
+
+}
+
+
 }

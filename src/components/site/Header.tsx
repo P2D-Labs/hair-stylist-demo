@@ -39,16 +39,12 @@ export function Header() {
       }`}
     >
       <div className="container-edit flex h-20 items-center justify-between">
-        <Link to="/" className="group flex items-center gap-3">
-          <span
-            className="flex h-9 w-9 items-center justify-center rounded-full border transition-colors duration-300"
-            style={{
-              borderColor: scrolled || open ? theme.colors.primary : "currentColor",
-            }}
-          >
-            <span className="font-display text-sm">{site.brand.mark}</span>
-          </span>
-          <span className="font-display text-xl tracking-wide">{site.brand.name}</span>
+        <Link to="/" className="group flex items-center">
+          <img
+            src="/epoch_logo_l.png"
+            alt={site.brand.fullName}
+            className="h-14 w-auto md:h-14"
+          />
         </Link>
 
         <nav className="hidden items-center gap-10 md:flex">
