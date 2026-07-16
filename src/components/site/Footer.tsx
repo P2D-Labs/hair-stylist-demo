@@ -9,12 +9,22 @@ export function Footer() {
       <div className="container-edit py-16 md:py-20">
         <Reveal className="grid grid-cols-1 gap-12 md:grid-cols-[1.2fr_1fr_1fr_1fr]">
           <div>
-            <Link to="/" className="flex items-center gap-3">
-              <span className="flex h-9 w-9 items-center justify-center rounded-full border border-white/40">
-                <span className="font-display text-sm">{site.brand.mark}</span>
-              </span>
-              <span className="font-display text-xl">{site.brand.name}</span>
-            </Link>
+            <Link
+  to="/"
+  className="group inline-flex items-center"
+>
+  <img
+    src="/epoch_logo_l.png"
+    alt={site.brand.fullName}
+    className="
+      h-12 w-auto
+      drop-shadow-[0_0_12px_rgba(255,255,255,0.35)]
+      transition-all duration-300
+      group-hover:scale-105
+      group-hover:drop-shadow-[0_0_18px_rgba(255,255,255,0.55)]
+    "
+  />
+</Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/65">
               {site.brand.tagline}
             </p>
@@ -83,7 +93,17 @@ export function Footer() {
 
         <div className="mt-16 flex flex-col items-start justify-between gap-4 border-t border-white/15 pt-8 text-xs text-white/45 md:flex-row md:items-center">
           <span>© {new Date().getFullYear()} {site.brand.fullName}. All rights reserved.</span>
-          <span>Crafted as a living template — rebrand freely.</span>
+          <span>
+            Designed by{" "}
+            <a
+              href="https://www.p2dlabs.com"
+              target="_blank"
+              rel="noreferrer"
+              className="text-white/70 hover:text-white"
+            >
+              P2D Labs
+            </a>
+          </span>
         </div>
       </div>
     </footer>
