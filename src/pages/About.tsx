@@ -55,8 +55,13 @@ export default function About() {
         <div className="relative">
           <div className="absolute left-[15px] top-2 hidden h-[calc(100%-16px)] w-px bg-brand-line md:block" />
           <div className="space-y-14 md:space-y-20">
-            {site.timeline.map((t) => (
-              <Reveal key={t.chapter} className="relative grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-8">
+            {site.timeline.map((t, index) => (
+              <Reveal
+                key={t.chapter}
+                y={-56}
+                delay={index * 0.14}
+                className="relative grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-8"
+              >
                 <div className="flex items-center gap-4 md:col-span-3">
                   <span className="relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-brand-accent bg-brand-paper font-label text-xs text-brand-accent">
                     {t.chapter}

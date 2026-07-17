@@ -136,6 +136,9 @@
     --radius-lg:18px;
     --radius-pill:999px;
 
+    /* All primary and bordered CTA buttons. Change this one value globally. */
+    --button-radius:0px;
+
 
 
     /* Tailwind/Shadcn compatibility */

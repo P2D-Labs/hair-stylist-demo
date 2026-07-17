@@ -10,21 +10,23 @@ export function Footer() {
         <Reveal className="grid grid-cols-1 gap-12 md:grid-cols-[1.2fr_1fr_1fr_1fr]">
           <div>
             <Link
-  to="/"
-  className="group inline-flex items-center"
->
-  <img
-    src="/epoch_logo_l.png"
-    alt={site.brand.fullName}
-    className="
-      h-12 w-auto
-      drop-shadow-[0_0_12px_rgba(255,255,255,0.35)]
-      transition-all duration-300
-      group-hover:scale-105
-      group-hover:drop-shadow-[0_0_18px_rgba(255,255,255,0.55)]
-    "
-  />
-</Link>
+              to="/"
+              className="group relative isolate inline-flex items-center px-2 py-1 transition-transform duration-300 hover:-translate-y-0.5"
+            >
+              <span
+                aria-hidden="true"
+                className="absolute inset-x-1 inset-y-2 -z-10 rounded-full bg-white/35 blur-xl transition-all duration-500 group-hover:inset-x-0 group-hover:bg-white/45 group-hover:blur-2xl"
+              />
+              <span
+                aria-hidden="true"
+                className="absolute -inset-x-2 inset-y-0 -z-20 rounded-full bg-brand-secondary-light/35 blur-2xl transition-all duration-500 group-hover:-inset-x-4 group-hover:bg-brand-secondary-light/50"
+              />
+              <img
+                src="/epoch_logo_l.png"
+                alt={site.brand.fullName}
+                className="relative z-10 h-14 w-auto drop-shadow-[0_1px_3px_rgba(255,255,255,0.8)] transition-all duration-300 group-hover:scale-[1.02] group-hover:drop-shadow-[0_2px_5px_rgba(255,255,255,0.95)] md:h-14"
+              />
+            </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/65">
               {site.brand.tagline}
             </p>

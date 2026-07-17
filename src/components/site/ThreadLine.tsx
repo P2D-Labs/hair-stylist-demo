@@ -59,14 +59,24 @@ export function Spine() {
 }
 
 /** Roman-numeral chapter marker — used as the eyebrow above each major section. */
-export function ChapterMark({ numeral, label }: { numeral: string; label: string }) {
+export function ChapterMark({
+  numeral,
+  label,
+  tone = "default",
+}: {
+  numeral: string;
+  label: string;
+  tone?: "default" | "light";
+}) {
+  const light = tone === "light";
+
   return (
     <div className="flex items-center gap-3">
-      <span className="font-label text-xs tracking-[0.25em] text-brand-accent">
+      <span className={`font-label text-xs tracking-[0.25em] ${light ? "text-brand-secondary-light" : "text-brand-accent"}`}>
         {numeral}
       </span>
-      <span className="h-px w-8 bg-brand-line" />
-      <span className="font-label text-xs uppercase tracking-[0.25em] text-brand-ink-soft">
+      <span className={`h-px w-8 ${light ? "bg-white/45" : "bg-brand-line"}`} />
+      <span className={`font-label text-xs uppercase tracking-[0.25em] ${light ? "text-brand-secondary-light" : "text-brand-ink-soft"}`}>
         {label}
       </span>
     </div>

@@ -23,7 +23,7 @@ export const site = {
   ],
 
   contact: {
-    phone: "+94 76 123 4567",
+    phone: "+94 76 162 2337",
     email: "hello@epochhair.studio",
     address: "42 Horton Place, Colombo 07, Sri Lanka",
     hours: [
@@ -33,7 +33,7 @@ export const site = {
       { day: "Monday", time: "Closed" },
     ],
     mapEmbed:
-      "https://www.google.com/maps?q=42+Horton+Place,+Colombo+00700,+Sri+Lanka&output=embed",
+      "https://www.google.com/maps?q=42+Horton+Place,+Colombo+00700,+Sri+Lanka&z=17&output=embed",
     social: [
       { label: "Instagram", href: "https://instagram.com" },
       { label: "Facebook", href: "https://facebook.com" },

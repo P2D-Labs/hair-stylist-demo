@@ -15,9 +15,9 @@ const base =
 
 const variants: Record<string, string> = {
   primary:
-    "bg-brand-primary text-white px-7 py-3.5 rounded-[var(--radius-lg)] hover:bg-brand-primary-dark",
+    "bg-brand-primary text-white px-7 py-3.5 rounded-[var(--button-radius)] hover:bg-brand-primary-dark",
   secondary:
-    "border border-brand-primary text-brand-primary px-7 py-3.5 rounded-[var(--radius-lg)] hover:bg-brand-primary hover:text-white",
+    "border border-brand-primary text-brand-primary px-7 py-3.5 rounded-[var(--button-radius)] hover:bg-brand-primary hover:text-white",
   ghost: "text-brand-ink px-0 py-1",
 };
 

@@ -32,8 +32,14 @@ export function FacebookIcon({ size = 18, ...props }: IconProps) {
 /** Stylized note glyph — a generic stand-in rather than a literal logo trace. */
 export function TikTokIcon({ size = 18, ...props }: IconProps) {
   return (
-    <svg width={size} height={size} {...base} {...props}>
-      <path d="M9 18a4 4 0 1 0 4 4V2a5 5 0 0 0 5 5" />
+    <svg
+      width={size}
+      height={size}
+      {...base}
+      {...props}
+    >
+      <path d="M15 3v11.5a4.5 4.5 0 1 1-4-4.47" />
+      <path d="M15 3c.65 2.8 2.35 4.5 5 5" />
     </svg>
   );
 }

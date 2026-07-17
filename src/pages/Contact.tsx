@@ -6,22 +6,50 @@ import { Reveal, RevealText } from "@/components/site/Reveal";
 import { ThreadLine, ChapterMark } from "@/components/site/ThreadLine";
 import { Section } from "@/components/site/Section";
 import { socialIcons, WhatsAppIcon } from "@/components/site/SocialIcons";
-import { CtaLink } from "@/components/site/CtaLink";
 import { getWhatsAppHref } from "@/lib/whatsapp";
 
 export default function Contact() {
   const [submitting, setSubmitting] = useState(false);
-  const whatsappHref = getWhatsAppHref();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitting(true);
-    // No backend wired up — replace this with your booking API / email service.
-    setTimeout(() => {
-      setSubmitting(false);
-      toast.success("Request sent — we'll confirm your appointment by email shortly.");
-      (e.target as HTMLFormElement).reset();
-    }, 700);
+
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const firstName = String(data.get("firstName") ?? "").trim();
+    const lastName = String(data.get("lastName") ?? "").trim();
+    const email = String(data.get("email") ?? "").trim();
+    const phone = String(data.get("phone") ?? "").trim();
+    const service = String(data.get("service") ?? "").trim();
+    const message = String(data.get("message") ?? "").trim();
+
+    const appointmentDraft = [
+      "Hello Epoch Style Hub, I would like to request an appointment.",
+      "",
+      `Name: ${firstName} ${lastName}`,
+      `Email: ${email}`,
+      phone && `Phone: ${phone}`,
+      service && `Service: ${service}`,
+      message && `Notes: ${message}`,
+    ]
+      .filter(Boolean)
+      .join("\n");
+
+    const whatsappWindow = window.open(
+      getWhatsAppHref(appointmentDraft),
+      "_blank",
+      "noopener,noreferrer"
+    );
+
+    if (whatsappWindow) {
+      form.reset();
+      toast.success("Your appointment details are drafted in WhatsApp.");
+    } else {
+      toast.error("Please allow pop-ups to open your WhatsApp draft.");
+    }
+
+    setSubmitting(false);
   };
 
   return (
@@ -44,16 +72,16 @@ export default function Contact() {
 
       <section className="container-edit pb-24 md:pb-32">
         <div className="grid grid-cols-1 gap-16 md:grid-cols-12 md:gap-x-12">
-          <Reveal className="md:col-span-5">
+          <div className="md:col-span-5">
             <div className="divide-y divide-brand-line border-y border-brand-line">
-              <ContactRow icon={MapPin} label="Studio address">
+              <ContactRow icon={MapPin} label="Studio address" delay={0}>
                 <p className="text-base text-brand-ink">{site.contact.address}</p>
               </ContactRow>
-              <ContactRow icon={Mail} label="Phone & email">
+              <ContactRow icon={Mail} label="Phone & email" delay={0.12}>
                 <p className="text-base text-brand-ink">{site.contact.phone}</p>
                 <p className="text-base text-brand-ink">{site.contact.email}</p>
               </ContactRow>
-              <ContactRow icon={Clock} label="Hours">
+              <ContactRow icon={Clock} label="Hours" delay={0.24}>
                 <ul className="space-y-1.5">
                   {site.contact.hours.map((h) => (
                     <li key={h.day} className="flex justify-between gap-6 text-sm text-brand-ink-soft">
@@ -63,7 +91,7 @@ export default function Contact() {
                   ))}
                 </ul>
               </ContactRow>
-              <ContactRow icon={Share2} label="Follow along">
+              <ContactRow icon={Share2} label="Follow along" delay={0.36}>
                 <div className="flex gap-3">
                   {site.contact.social.map((s) => {
                     const Icon = socialIcons[s.label];
@@ -84,16 +112,18 @@ export default function Contact() {
               </ContactRow>
             </div>
 
-            <div className="mt-10 aspect-[4/3] w-full overflow-hidden border border-brand-line">
-              <iframe
-                title="Studio location"
-                src={site.contact.mapEmbed}
-                className="h-full w-full grayscale"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            </div>
-          </Reveal>
+            <Reveal variant="image" className="mt-10">
+              <div className="group aspect-[4/3] w-full overflow-hidden border border-brand-line">
+                <iframe
+                  title="Studio location"
+                  src={site.contact.mapEmbed}
+                  className="h-full w-full scale-[1.03] grayscale transition-all duration-700 ease-epoch group-hover:scale-110 group-hover:grayscale-0"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              </div>
+            </Reveal>
+          </div>
 
           <Reveal delay={0.1} className="md:col-span-7">
             <div className="border border-brand-line bg-brand-paper-muted/50 p-6 sm:p-10">
@@ -144,23 +174,12 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="group relative inline-flex items-center gap-2 bg-brand-primary px-8 py-4 font-label text-sm tracking-wide text-white transition-all duration-300 ease-epoch hover:-translate-y-0.5 hover:bg-brand-primary-dark disabled:opacity-60"
+                  className="group relative inline-flex items-center gap-2 rounded-[var(--button-radius)] bg-brand-primary px-8 py-4 font-label text-sm tracking-wide text-white transition-all duration-300 ease-epoch hover:-translate-y-0.5 hover:bg-brand-primary-dark disabled:opacity-60"
                 >
-                  {submitting ? "Sending…" : "Request appointment"}
+                  <WhatsAppIcon size={17} />
+                  {submitting ? "Opening WhatsApp…" : "Book via WhatsApp"}
                 </button>
               </form>
-
-              <div className="mt-8 flex flex-col gap-3 border-t border-brand-line pt-6 sm:flex-row sm:items-center sm:justify-between">
-                <p className="text-sm text-brand-ink-soft">
-                  Prefer a faster reply? Message us directly.
-                </p>
-                <CtaLink to={whatsappHref} variant="secondary" external className="!py-3">
-                  <span className="flex items-center gap-2">
-                    <WhatsAppIcon size={16} />
-                    Book via WhatsApp
-                  </span>
-                </CtaLink>
-              </div>
             </div>
           </Reveal>
         </div>
@@ -172,14 +191,16 @@ export default function Contact() {
 function ContactRow({
   icon: Icon,
   label,
+  delay,
   children,
 }: {
   icon: typeof MapPin;
   label: string;
+  delay: number;
   children: ReactNode;
 }) {
   return (
-    <div className="flex gap-4 py-6 first:pt-0 last:pb-0">
+    <Reveal y={-56} delay={delay} className="flex gap-4 py-6 first:pt-0 last:pb-0">
       <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-brand-accent text-brand-accent">
         <Icon size={16} />
       </span>
@@ -187,7 +208,7 @@ function ContactRow({
         <p className="font-label text-xs uppercase tracking-[0.2em] text-brand-accent">{label}</p>
         {children}
       </div>
-    </div>
+    </Reveal>
   );
 }
 

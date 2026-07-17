@@ -22,16 +22,76 @@ function partnerInitials(name: string) {
     .toUpperCase();
 }
 
+function CuttingScissors() {
+  const bladeTransition = {
+    duration: 0.28,
+    repeat: Infinity,
+    repeatType: "mirror" as const,
+    ease: "easeInOut" as const,
+  };
+
+  return (
+    <div className="relative h-12 w-16 drop-shadow-[0_5px_8px_rgba(133,7,165,0.45)]">
+      {[0, 1, 2].map((particle) => (
+        <motion.span
+          key={particle}
+          animate={{ x: [-2, -16 - particle * 5], y: [0, (particle - 1) * 8], opacity: [0.9, 0] }}
+          transition={{ duration: 0.55, repeat: Infinity, delay: particle * 0.13, ease: "easeOut" }}
+          className="absolute left-2 top-1/2 h-px w-2 origin-right bg-brand-primary-light"
+        />
+      ))}
+      <svg viewBox="0 0 72 48" className="relative h-full w-full overflow-visible" fill="none">
+        <motion.g
+          animate={{ rotate: [-7, 5] }}
+          transition={bladeTransition}
+          style={{ transformOrigin: "31px 24px" }}
+        >
+          <path d="M31 23.5L70 7.5C64 16 52 22 31 26Z" fill="url(#blade-top)" stroke="white" strokeOpacity=".75" strokeWidth=".7" />
+          <circle cx="18" cy="15" r="9" stroke={theme.colors.primaryLight} strokeWidth="4.5" />
+          <path d="M24 18L32 24" stroke={theme.colors.secondary} strokeWidth="4" strokeLinecap="round" />
+        </motion.g>
+        <motion.g
+          animate={{ rotate: [7, -5] }}
+          transition={bladeTransition}
+          style={{ transformOrigin: "31px 24px" }}
+        >
+          <path d="M31 24.5L70 40.5C64 32 52 26 31 22Z" fill="url(#blade-bottom)" stroke="white" strokeOpacity=".75" strokeWidth=".7" />
+          <circle cx="18" cy="33" r="9" stroke={theme.colors.primaryLight} strokeWidth="4.5" />
+          <path d="M24 30L32 24" stroke={theme.colors.secondary} strokeWidth="4" strokeLinecap="round" />
+        </motion.g>
+        <circle cx="31" cy="24" r="3.25" fill={theme.colors.paper} stroke={theme.colors.secondaryDark} strokeWidth="1.2" />
+        <circle cx="31" cy="24" r="1" fill={theme.colors.secondaryDark} />
+        <defs>
+          <linearGradient id="blade-top" x1="31" y1="24" x2="68" y2="9" gradientUnits="userSpaceOnUse">
+            <stop stopColor={theme.colors.inkSoft} />
+            <stop offset=".48" stopColor={theme.colors.white} />
+            <stop offset="1" stopColor={theme.colors.primaryLight} />
+          </linearGradient>
+          <linearGradient id="blade-bottom" x1="31" y1="24" x2="68" y2="39" gradientUnits="userSpaceOnUse">
+            <stop stopColor={theme.colors.inkSoft} />
+            <stop offset=".5" stopColor={theme.colors.paper} />
+            <stop offset="1" stopColor={theme.colors.primaryLight} />
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+  );
+}
+
 export default function Home() {
   const reduceMotion = useReducedMotion();
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
-    offset: ["start start", "end start"],
+    offset: ["start start", "end end"],
   });
   const imageYRaw = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
   const contentYRaw = useTransform(scrollYProgress, [0, 1], ["0%", "-8%"]);
   const fadeRaw = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const scissorsX = useTransform(scrollYProgress, [0.08, 0.88], ["-12vw", "108vw"]);
+  const scissorsRotate = useTransform(scrollYProgress, [0.08, 0.88], [-8, 8]);
+  const cutLineScale = useTransform(scrollYProgress, [0.08, 0.88], [0, 1]);
+  const cutOpacity = useTransform(scrollYProgress, [0.02, 0.08, 0.88, 1], [0, 1, 1, 0]);
   const imageY = reduceMotion ? "0%" : imageYRaw;
   const contentY = reduceMotion ? "0%" : contentYRaw;
   const fade = reduceMotion ? 1 : fadeRaw;
@@ -47,24 +107,47 @@ export default function Home() {
   return (
     <>
       {/* ---------- HERO ---------- */}
-      <section ref={heroRef} className="relative h-[100svh] min-h-[640px] overflow-hidden">
+      <section ref={heroRef} className="relative h-[140svh] min-h-[896px]">
+        <div className="sticky top-0 h-[100svh] min-h-[640px] overflow-hidden">
         <motion.div style={{ y: imageY }} className="absolute inset-0">
           <Image src={site.hero.image} alt="" eager className="h-[118%] w-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-black/5" />
         </motion.div>
 
+        {!reduceMotion && (
+          <motion.div
+            aria-hidden="true"
+            style={{ opacity: cutOpacity }}
+            className="pointer-events-none absolute inset-x-0 bottom-6 z-20 md:bottom-8"
+          >
+            <span className="absolute left-0 top-1/2 block w-full border-t border-dashed border-white/30" />
+            <motion.span
+              style={{ scaleX: cutLineScale }}
+              className="absolute left-0 top-1/2 block w-full origin-left border-t-2 border-brand-primary-light shadow-[0_0_9px_rgba(163,43,163,0.8)]"
+            />
+            <motion.span
+              style={{ x: scissorsX, rotate: scissorsRotate }}
+              className="absolute -top-6 left-0"
+            >
+              <CuttingScissors />
+            </motion.span>
+          </motion.div>
+        )}
+
         <motion.div
           style={{ y: contentY, opacity: fade }}
           className="container-edit relative flex h-full flex-col justify-end pb-20 pt-32 text-white md:pb-28"
         >
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.7, ease: theme.motion.ease }}
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, x: -40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: reduceMotion ? 0 : 0.3, duration: 0.75, ease: theme.motion.ease }}
+          >
+          <p
             className="font-label text-xs uppercase tracking-[0.3em] text-brand-accent-light"
           >
             {site.hero.eyebrow}
-          </motion.p>
+          </p>
 
           <h1 className="mt-5 max-w-2xl font-display text-5xl leading-[1.05] md:text-7xl">
             {site.hero.headline.split("\n").map((line, i) => (
@@ -79,35 +162,26 @@ export default function Home() {
             ))}
           </h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.65, duration: 0.7, ease: theme.motion.ease }}
-            className="mt-6 max-w-md text-base leading-relaxed text-white/80"
-          >
+          <p className="mt-6 max-w-md text-base leading-relaxed text-white/80">
             {site.hero.sub}
-          </motion.p>
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.7, ease: theme.motion.ease }}
-            className="mt-9 flex flex-wrap items-center gap-4"
-          >
-            <CtaLink to={getWhatsAppHref()} external variant="primary" className="!bg-white !text-brand-primary hover:!bg-brand-accent-light">
+          <div className="mt-9 flex flex-wrap items-center gap-4">
+            <CtaLink to={getWhatsAppHref()} external variant="primary" className="!bg-white !text-brand-primary hover:!bg-brand-primary hover:!text-white">
               {site.hero.ctaPrimary.label}
             </CtaLink>
             <CtaLink to={site.hero.ctaSecondary.path} variant="ghost" className="!text-white">
               {site.hero.ctaSecondary.label}
             </CtaLink>
+          </div>
           </motion.div>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
-          className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-white/70 md:flex"
+          transition={{ delay: reduceMotion ? 0 : 1.2, duration: 0.8 }}
+          className="absolute bottom-16 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-white/70 md:flex"
         >
           <span className="font-label text-[10px] uppercase tracking-[0.3em]">Scroll</span>
           <motion.span
@@ -116,6 +190,7 @@ export default function Home() {
             className="h-8 w-px bg-white/60"
           />
         </motion.div>
+        </div>
       </section>
 
       {/* ---------- STATS STRIP ---------- */}
@@ -363,7 +438,7 @@ export default function Home() {
       {/* ---------- TESTIMONIALS ---------- */}
       <Section bg="primary">
         <Reveal className="mb-14">
-          <ChapterMark numeral="V" label="In their words" />
+          <ChapterMark numeral="V" label="In their words" tone="light" />
         </Reveal>
         <RevealGroup className="grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-8">
           {site.testimonials.map((t) => (
