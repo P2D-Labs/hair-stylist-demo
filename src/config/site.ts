@@ -15,11 +15,11 @@ export const site = {
   },
 
   nav: [
-    { label: "Home", path: "/" },
-    { label: "About", path: "/about" },
-    { label: "Services", path: "/services" },
-    { label: "Gallery", path: "/gallery" },
-    { label: "Contact", path: "/contact" },
+    { label: "Home", path: "/", enabled: true },
+    { label: "About", path: "/about", enabled: true },
+    { label: "Services", path: "/services", enabled: false },
+    { label: "Gallery", path: "/gallery", enabled: true },
+    { label: "Contact", path: "/contact", enabled: false },
   ],
 
   contact: {

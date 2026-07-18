@@ -52,16 +52,25 @@ export function Header() {
             <NavLink
               key={item.path}
               to={item.path}
+              aria-disabled={!item.enabled}
+              tabIndex={item.enabled ? undefined : -1}
+              onClick={(event) => {
+                if (!item.enabled) event.preventDefault();
+              }}
               className={({ isActive }) =>
                 `relative py-1 font-label text-sm tracking-wide transition-colors duration-300 ${
-                  isActive ? "text-brand-accent" : "hover:text-brand-accent"
+                  !item.enabled
+                    ? "cursor-not-allowed opacity-45"
+                    : isActive
+                      ? "text-brand-accent"
+                      : "hover:text-brand-accent"
                 }`
               }
             >
               {({ isActive }) => (
                 <>
                   {item.label}
-                  {isActive && (
+                  {isActive && item.enabled && (
                     <motion.span
                       layoutId="nav-underline"
                       className="absolute -bottom-1 left-0 h-px w-full bg-brand-accent"
@@ -108,8 +117,19 @@ export function Header() {
                 >
                   <NavLink
                     to={item.path}
+                    aria-disabled={!item.enabled}
+                    tabIndex={item.enabled ? undefined : -1}
+                    onClick={(event) => {
+                      if (!item.enabled) event.preventDefault();
+                    }}
                     className={({ isActive }) =>
-                      `block py-3 font-display text-2xl ${isActive ? "text-brand-accent" : ""}`
+                      `block py-3 font-display text-2xl ${
+                        !item.enabled
+                          ? "cursor-not-allowed opacity-40"
+                          : isActive
+                            ? "text-brand-accent"
+                            : ""
+                      }`
                     }
                   >
                     {item.label}

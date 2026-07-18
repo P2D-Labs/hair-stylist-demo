@@ -41,7 +41,16 @@ export function Footer() {
                 <li key={item.path}>
                   <Link
                     to={item.path}
-                    className="text-sm text-white/75 transition-colors hover:text-white"
+                    aria-disabled={!item.enabled}
+                    tabIndex={item.enabled ? undefined : -1}
+                    onClick={(event) => {
+                      if (!item.enabled) event.preventDefault();
+                    }}
+                    className={`text-sm transition-colors ${
+                      item.enabled
+                        ? "text-white/75 hover:text-white"
+                        : "cursor-not-allowed text-white/35"
+                    }`}
                   >
                     {item.label}
                   </Link>
