@@ -17,9 +17,9 @@ export const site = {
   nav: [
     { label: "Home", path: "/", enabled: true },
     { label: "About", path: "/about", enabled: true },
-    { label: "Services", path: "/services", enabled: false },
+    { label: "Services", path: "/services", enabled: true },
     { label: "Gallery", path: "/gallery", enabled: true },
-    { label: "Contact", path: "/contact", enabled: false },
+    { label: "Contact", path: "/contact", enabled: true },
   ],
 
   contact: {
