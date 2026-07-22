@@ -21,8 +21,8 @@ export default function Services() {
         />
         <Reveal delay={0.16}>
           <p className="mt-7 max-w-xl text-base leading-relaxed text-brand-ink-soft">
-            Every price includes a consultation. Durations are approximate — your
-            stylist will confirm timing once they see your hair in person.
+            Every service includes a consultation, so your stylist can tailor
+            the details to your hair before any work begins.
           </p>
         </Reveal>
       </Section>
@@ -43,16 +43,11 @@ export default function Services() {
 
           <RevealGroup className="grid grid-cols-1 divide-y divide-brand-line md:grid-cols-2 md:gap-x-16 md:divide-y-0">
             {group.services.map((s) => (
-              <Reveal key={s.name} className="flex items-baseline justify-between gap-6 py-5 md:border-b md:border-brand-line md:py-6">
-                <div>
-                  <h3 className="font-display text-lg text-brand-primary md:text-xl">{s.name}</h3>
-                  <p className="mt-1 font-label text-xs uppercase tracking-wide text-brand-ink-soft/70">
-                    {s.duration}
-                  </p>
-                </div>
-                <span className="whitespace-nowrap font-label text-sm text-brand-accent">
-                  {s.price}
-                </span>
+              <Reveal key={s.name} className="py-5 md:border-b md:border-brand-line md:py-6">
+                <h3 className="font-display text-lg text-brand-primary md:text-xl">{s.name}</h3>
+                <p className="mt-2 max-w-md text-sm leading-relaxed text-brand-ink-soft">
+                  {s.description}
+                </p>
               </Reveal>
             ))}
           </RevealGroup>
